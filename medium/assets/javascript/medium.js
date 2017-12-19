@@ -21,7 +21,7 @@
  * 1. Clicking a "SHOOT" button attempt to score against the opposing team.
  *   - shots have a random chance of succeeding or failing
  *   - number of shots taken should increase every click on the "SHOOT" button
- *   - number of hits obviously only increases when the shot is successful
+ *   - number of hits obviously only increases when the   shot is successful
  *
  * 2. Clicking the "RESET" button resets all the shot and score counters and
  * adds 1 to the number of resets
@@ -37,13 +37,62 @@
  */
 
 (function(){
-
+  
   //jQuery equivelent to window.onload = function{}
   //code in here wont run until page loads
   $(function(){
+    //set up variables
+    let teamOneShootButton = $('#teamone-shoot');
+    let teamTwoShootButton = $('#teamtwo-shoot');
+    let teamOneShotsTaken = parseInt($('#teamone-numshots').html());
+    let teamOneGoals = parseInt($('#teamone-numhits').html());
+    let teamTwoShotsTaken = parseInt($('#teamtwo-numshots').html());
+    let teamTwoGoals = parseInt($('#teamtwo-numhits').html());
+    let numResets = parseInt($('#num-resets').html());
+    let scoreSound = new Audio('assets/audio/shoot.mp3');
+    //function to get a random number 0 or 1 to determine if a goal or not
+    function getRandomInt() {
+      min = Math.ceil(0);
+      max = Math.floor(1);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    //Team one shoot action
+    teamOneShootButton.click(function(){
+      $('body').css('background-color', 'white');
+      let teamOneGoalScored = getRandomInt();
+      $('#teamone-numshots').html(teamOneShotsTaken += 1);
+      $('#teamone-numhits').html(teamOneGoals += teamOneGoalScored);
+      if(teamOneGoalScored == 1){
+        scoreSound.play();
+        $('body').css('background-color', 'gold');
+      }
+    
+    })
 
+    //Team one shoot action
+    teamTwoShootButton.click(function () {
+      $('body').css('background-color', 'white');
+      let teamTwoGoalScored = getRandomInt();
+      $('#teamtwo-numshots').html(teamTwoShotsTaken += 1);
+      $('#teamtwo-numhits').html(teamTwoGoals += teamTwoGoalScored);
+      if (teamTwoGoalScored == 1) {
+        scoreSound.play();
+        $('body').css('background-color', 'green');
+      }
 
+    })
+
+    //Reset button
+    $('#reset').click(function () {
+      $('body').css('background-color', 'white');
+      $('#num-resets').html(numResets += 1);
+      $('#teamone-numshots').html(teamOneShotsTaken = 0);
+      $('#teamone-numhits').html(teamOneGoals = 0);
+      $('#teamtwo-numshots').html(teamTwoShotsTaken = 0);
+      $('#teamtwo-numhits').html(teamTwoGoals = 0);
 
   })
+})
 
-})();
+})()

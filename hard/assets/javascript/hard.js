@@ -34,6 +34,21 @@
    //jQuery equivelent to window.onload = function{}
    //code in here wont run until page loads
    $(function(){
+     $('.title:even').hide();
+   //  let baconReplace = $('body').html().replace('Bacon', 'LASER VISION');
+   // $('body').html(baconReplace);
+     let countTitleClicks = 0;
+
+     let feedTemplate = $('#feed-template');
+     feedTemplate.click(function() {
+      countTitleClicks += 1; 
+      if(countTitleClicks %2 != 0){
+        feedTemplate.css('color', 'red');
+      } else{
+        feedTemplate.css('color', 'black');
+      }
+     })
+
 
 
 
